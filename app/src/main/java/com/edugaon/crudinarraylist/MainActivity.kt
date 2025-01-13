@@ -26,31 +26,9 @@ class MainActivity : AppCompatActivity() {
 
 
         val userListView = findViewById<ListView>(R.id.userListView)
-        val userNameList = arrayListOf("Ram", "Mohan", "Sohan", "Ram", "Mohan", "Sohan","Ram", "Mohan", "Sohan", "Ram", "Mohan", "Sohan","Ram", "Mohan", "Sohan","Ram", "Mohan", "Sohan")
-        userListView.adapter =ArrayAdapter(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, userNameList )
+        val userNameList = arrayListOf("Ram", "Mohan", "Sohan", "Ram", "Mohan", "Sohan","Ram", "Mohan", "Sohan", "Ram", "Mohan", "Sohan","Ram", "Mohan", "Sohan","Ram", "Mohan", "Sohan") // user list for
+        userListView.adapter =ArrayAdapter(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, userNameList )  // adding Adapter to list view for showing data with itemLayout
 
-        val addUserButton = findViewById<FloatingActionButton>(R.id.addUserButton)
-
-        addUserButton.setOnClickListener {
-            val addUserLayout = layoutInflater.inflate(R.layout.add_user_layout, null, false)
-
-            val alertDialog = AlertDialog.Builder(this).create()
-            alertDialog.setView(addUserLayout)
-            alertDialog.show()
-
-            val addNowButton = addUserLayout.findViewById<Button>(R.id.addNowBtn)
-            val nameEditText = addUserLayout.findViewById<EditText>(R.id.nameEditText)
-            addNowButton.setOnClickListener {
-
-                userNameList.add(nameEditText.text.toString())
-                userListView.adapter =ArrayAdapter(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, userNameList )
-
-                alertDialog.dismiss()
-            }
-
-
-
-        }
 //        userNameList.add("Geeta")
 //        userNameList.remove("Mohan")
 //       userNameList[0] = ""
