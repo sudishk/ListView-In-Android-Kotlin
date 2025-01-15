@@ -55,8 +55,8 @@ class MainActivity : AppCompatActivity() {
             
 
         }
-
         userListView.setOnItemClickListener { adapterView, view, i, l ->
+            val name = userNameList[i]
 
 
             val updateUserLayout = layoutInflater.inflate(R.layout.update_user_layout, null, false)
@@ -68,6 +68,9 @@ class MainActivity : AppCompatActivity() {
 
             val updateNowButton = updateUserLayout.findViewById<Button>(R.id.updateNowBtn)
             val nameEditText = updateUserLayout.findViewById<EditText>(R.id.nameEditText)
+
+            nameEditText.setText(name)
+
             updateNowButton.setOnClickListener {
                 userNameList[i] = nameEditText.text.toString()
 //                userNameList.add(nameEditText.text.toString())
@@ -79,6 +82,26 @@ class MainActivity : AppCompatActivity() {
 
         }
 
+        userListView.setOnItemLongClickListener { adapterView, view, i, l ->
+            val name = userNameList[i]
+            val  alertDialog = AlertDialog.Builder(this)
+            alertDialog.setTitle("User Deletion!")
+            alertDialog.setMessage("Are you sure that you want to delete $name?")
+            alertDialog.setPositiveButton("Yes"){_, _ ->
+                userNameList.removeAt(i)
+                userNameArrayAdapter.notifyDataSetChanged()
+                Toast.makeText(this, "Data deletion successfully", Toast.LENGTH_SHORT).show()
+
+            }
+
+            alertDialog.setNegativeButton("No"){_, _ ->
+                Toast.makeText(this, "Data deletion cancelled", Toast.LENGTH_SHORT).show()
+            }
+
+            alertDialog.show()
+
+            true
+        }
 
 
 //        userNameList.add("Geeta")
