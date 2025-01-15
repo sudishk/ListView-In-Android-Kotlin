@@ -6,6 +6,7 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ListView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -26,8 +27,11 @@ class MainActivity : AppCompatActivity() {
 
 
         val userListView = findViewById<ListView>(R.id.userListView)
+
         val userNameList = arrayListOf("Ram", "Mohan", "Sohan", "Ram", "Mohan", "Sohan","Ram", "Mohan", "Sohan", "Ram", "Mohan", "Sohan","Ram", "Mohan", "Sohan","Ram", "Mohan", "Sohan")
-        userListView.adapter =ArrayAdapter(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, userNameList )
+
+        val userNameArrayAdapter = ArrayAdapter(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, userNameList )
+        userListView.adapter = userNameArrayAdapter
 
         val addUserButton = findViewById<FloatingActionButton>(R.id.addUserButton)
 
@@ -43,14 +47,40 @@ class MainActivity : AppCompatActivity() {
             addNowButton.setOnClickListener {
 
                 userNameList.add(nameEditText.text.toString())
-                userListView.adapter =ArrayAdapter(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, userNameList )
+                userNameArrayAdapter.notifyDataSetChanged()
+
+                alertDialog.dismiss()
+            }
+
+            
+
+        }
+
+        userListView.setOnItemClickListener { adapterView, view, i, l ->
+
+
+            val updateUserLayout = layoutInflater.inflate(R.layout.update_user_layout, null, false)
+
+
+            val alertDialog = AlertDialog.Builder(this).create()
+            alertDialog.setView(updateUserLayout)
+            alertDialog.show()
+
+            val updateNowButton = updateUserLayout.findViewById<Button>(R.id.updateNowBtn)
+            val nameEditText = updateUserLayout.findViewById<EditText>(R.id.nameEditText)
+            updateNowButton.setOnClickListener {
+                userNameList[i] = nameEditText.text.toString()
+//                userNameList.add(nameEditText.text.toString())
+                userNameArrayAdapter.notifyDataSetChanged()
 
                 alertDialog.dismiss()
             }
 
 
-
         }
+
+
+
 //        userNameList.add("Geeta")
 //        userNameList.remove("Mohan")
 //       userNameList[0] = ""
